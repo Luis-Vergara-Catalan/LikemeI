@@ -1,7 +1,7 @@
 import "dotenv/config";
 import express from 'express';
-import { agregarPosts, obtenerPosts } from './db.js';
 import cors from 'cors';
+import routerPosts from "./routes/PostRoutes.js"
 
 const app = express();
 
@@ -15,13 +15,4 @@ app.listen(PORT, () => {
 });
 
 
-app.get('/posts', async (req, res) =>{
-    const posts = await obtenerPosts();
-    res.json(posts);
-});
-
-app.post('/posts', async (req, res)=> {
-    const {titulo, img, descripcion, like} = req.body;
-    await agregarPosts(titulo, img, descripcion, like);
-    res.send("Post agregado");
-});
+app.use('/posts', routerPosts)
